@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {connect} from 'react-redux';
 import {
   SafeAreaView,
   StyleSheet,
@@ -9,18 +10,24 @@ import {
 import Input from './Input';
 import MessagesList from './MessagesList';
 import useBarHeight from '../../hooks/useBarHeight';
+import {loadMessages, postMessages} from '../../containers/messages/actions';
 
-const Chat = ({isLoading}) => {
+const Chat = ({isLoading, messages, loadMessages, postMessages}) => {
   const [textValue, setText] = useState('te');
-  const [list, setList] = useState([]);
   const barHeight = useBarHeight();
 
+  useEffect(() => {
+    loadMessages();
+  }, []);
   const handleSubmit = () => {
+    // TODO: use real data
+    postMessages({
+      id: `${new Date()}`,
+      user: {id: 1, firstName: 'Gurgen', lastName: 'Abagyan'},
+      message: textValue,
+      date: new Date(),
+    });
     setText('');
-    setList(prevState => [
-      ...prevState,
-      {message: textValue, key: '' + Date(), date: new Date()},
-    ]);
   };
 
   if (isLoading) {
@@ -37,7 +44,7 @@ const Chat = ({isLoading}) => {
         keyboardVerticalOffset={barHeight}
         style={styles.container}
         behavior="padding">
-        <MessagesList list={list.slice().reverse()} />
+        <MessagesList list={messages.list.slice().reverse()} />
         <Input
           value={textValue}
           onChangeText={setText}
@@ -48,7 +55,9 @@ const Chat = ({isLoading}) => {
   );
 };
 
-export default Chat;
+const mapStateToProps = state => ({messages: state.messages});
+
+export default connect(mapStateToProps, {loadMessages, postMessages})(Chat);
 
 const styles = StyleSheet.create({
   safeAreaView: {

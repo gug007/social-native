@@ -1,19 +1,24 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, Button} from 'react-native';
+import {connect} from 'react-redux';
+import {View, Text, Button, StyleSheet} from 'react-native';
 import AsyncStorage from '../AsyncStorage';
 import {goToAuth, goToMessenger} from '../navigation';
 import styles from '../styles';
 import {ADD_CHAT_BUTTON} from '../constants/navigation';
-
 import {USER_TOKEN} from '../constants/navigation';
+import {loadChats} from '../containers/chats/actions';
 
-const Home = ({componentId}) => {
+const Chats = ({componentId, chats, loadChats}) => {
   const [username, setName] = useState('');
 
   useEffect(() => {
     (async () => {
       setName(await AsyncStorage.getItem(USER_TOKEN));
     })();
+  }, []);
+
+  useEffect(() => {
+    loadChats();
   }, []);
 
   const handleLogout = async () => {
@@ -29,6 +34,11 @@ const Home = ({componentId}) => {
   return (
     <View style={styles.container}>
       <Text>Hello {username}.</Text>
+      {chats.list.map(v => (
+        <View key={v.id} style={customStyles.chatItem}>
+          <Text>{v.title}</Text>
+        </View>
+      ))}
       <Button onPress={handleLogout} title="Sign Out" />
       <Button
         onPress={() => goToMessenger(componentId)}
@@ -38,7 +48,7 @@ const Home = ({componentId}) => {
   );
 };
 
-Home.options = () => ({
+Chats.options = () => ({
   topBar: {
     title: {
       text: 'Chats',
@@ -54,4 +64,15 @@ Home.options = () => ({
   },
 });
 
-export default Home;
+const mapStateToProps = state => ({chats: state.chats});
+
+export default connect(mapStateToProps, {loadChats})(Chats);
+
+const customStyles = StyleSheet.create({
+  chatItem: {
+    width: `100%`,
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#d6d7da',
+    padding: 7,
+  },
+});

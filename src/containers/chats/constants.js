@@ -1,0 +1,4 @@
+export const CHATS_REQUEST = "CHATS_REQUEST";
+export const CHATS_SUCCESS = "CHATS_SUCCESS";
+export const CHATS_FAILURE = "CHATS_FAILURE";
+export const CHATS_CREATE = "CHATS_CREATE";

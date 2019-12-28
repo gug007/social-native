@@ -6,6 +6,7 @@ const MessagesList = ({list}) => (
   <FlatList
     style={styles.scrollView}
     data={list}
+    keyExtractor={item => item.id.toString()}
     renderItem={({item}) => (
       <View
         style={[
@@ -15,9 +16,9 @@ const MessagesList = ({list}) => (
           },
         ]}>
         <View style={styles.message}>
-          <Text>{item.message}</Text>
+          <Text>{item.body}</Text>
           <Text style={styles.messageDate}>
-            {moment(item.date).format('LT')}
+            {moment(item.createdAt).format('LT')}
           </Text>
         </View>
       </View>
