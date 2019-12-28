@@ -12,12 +12,12 @@ import MessagesList from './MessagesList';
 import useBarHeight from '../../hooks/useBarHeight';
 import {loadMessages, postMessages} from '../../containers/messages/actions';
 
-const Chat = ({isLoading, messages, loadMessages, postMessages}) => {
+const Chat = ({isLoading, messages, loadMessages, postMessages, chatId}) => {
   const [textValue, setText] = useState('te');
   const barHeight = useBarHeight();
 
   useEffect(() => {
-    loadMessages();
+    loadMessages(chatId);
   }, []);
   const handleSubmit = () => {
     // TODO: use real data

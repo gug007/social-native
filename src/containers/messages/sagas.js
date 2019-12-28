@@ -8,7 +8,7 @@ import {request} from '../../api';
 
 function* messagesFetching(action) {
   try {
-    const response = yield call(request, 'messages');
+    const response = yield call(request, `messages/${action.chatId}`);
     yield put({type: MESSAGES_SUCCESS, payload: response});
   } catch (error) {
     yield put({type: MESSAGES_FAILURE});

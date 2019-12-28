@@ -58,7 +58,7 @@ export const goHome = () =>
     },
   });
 
-export const goToMessenger = componentId =>
+export const goToMessenger = (componentId, chatId) =>
   Navigation.push(componentId, {
     component: {
       name: CHAT,
@@ -66,6 +66,9 @@ export const goToMessenger = componentId =>
         topBar: {
           visible: true,
         },
+      },
+      passProps: {
+        chatId,
       },
     },
   });

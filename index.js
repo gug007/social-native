@@ -3,7 +3,7 @@ import {Provider} from 'react-redux';
 import Initializing from './src/components/Initializing';
 import SignIn from './src/components/SignIn';
 import SignUp from './src/components/SignUp';
-import Chats from './src/components/Chats';
+import Chats from './src/components/chats/Chats';
 import Chat from './src/components/messages/Chat';
 import AddChatButton from './src/components/messages/AddChatButton';
 import AddChatModal from './src/components/messages/AddChatModal';
