@@ -1,17 +1,7 @@
 import React from 'react';
-import {View, Button, StyleSheet} from 'react-native';
+import {Button} from 'react-native';
 import {addChatModal} from '../../navigation';
 
-const AddChat = () => (
-  <View style={styles.button}>
-    <Button onPress={addChatModal} style={styles.button} title="Add" />
-  </View>
-);
+const AddChat = () => <Button onPress={addChatModal} title="Add" />;
 
 export default AddChat;
-
-const styles = StyleSheet.create({
-  button: {
-    fontSize: 22,
-  },
-});

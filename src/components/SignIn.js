@@ -6,6 +6,7 @@ import {goHome} from '../navigation';
 import {Input} from './form';
 import {USER_TOKEN} from '../constants/navigation';
 import styles from '../styles';
+import SafeAreaWrapper from '../components/common/SafeAreaWrapper';
 
 const SignIn = () => {
   const handleSignIn = async ({username, password}) => {
@@ -13,7 +14,7 @@ const SignIn = () => {
       const user = await AsyncStorage.setItem(USER_TOKEN, username);
       goHome();
     } catch (err) {
-      // console.log('error:', err);
+      console.log('error:', err);
     }
   };
 
@@ -21,22 +22,24 @@ const SignIn = () => {
     <Formik
       initialValues={{username: '', password: ''}}
       onSubmit={handleSignIn}>
-      {({handleChange, handleBlur, handleSubmit, values}) => (
-        <View style={styles.container}>
-          <Field
-            name="username"
-            placeholder="Username"
-            autoCorrect={false}
-            component={Input}
-          />
-          <Field
-            name="password"
-            placeholder="Password"
-            secureTextEntry={true}
-            component={Input}
-          />
-          <Button title="Sign In" onPress={handleSubmit} />
-        </View>
+      {({handleChange, handleBlur, handleSubmit}) => (
+        <SafeAreaWrapper>
+          <View style={styles.container}>
+            <Field
+              name="username"
+              placeholder="Username"
+              autoCorrect={false}
+              component={Input}
+            />
+            <Field
+              name="password"
+              placeholder="Password"
+              secureTextEntry={true}
+              component={Input}
+            />
+            <Button title="Sign In" onPress={handleSubmit} />
+          </View>
+        </SafeAreaWrapper>
       )}
     </Formik>
   );

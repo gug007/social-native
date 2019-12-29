@@ -22,12 +22,12 @@ export default StyleSheet.create({
   },
   body1: {
     // fontWeight: font.weights.text,
-    fontSize: 15,
+    fontSize: 16,
     // lineHeight: 1.6,
   },
   body2: {
     // fontWeight: font.weights.text,
-    fontSize: 14,
+    fontSize: 15,
     // lineHeight: 1.5,
   },
   h1: {

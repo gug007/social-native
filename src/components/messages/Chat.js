@@ -1,17 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
-import {
-  SafeAreaView,
-  StyleSheet,
-  View,
-  ActivityIndicator,
-  KeyboardAvoidingView,
-} from 'react-native';
+import {View, ActivityIndicator} from 'react-native';
 import Input from './Input';
 import MessagesList from './MessagesList';
 import useBarHeight from '../../hooks/useBarHeight';
 import {loadMessages, postMessages} from '../../containers/messages/actions';
 import {loadChats} from '../../containers/chats/actions';
+import SafeAreaWrapper from '../common/SafeAreaWrapper';
 
 const Chat = ({
   isLoading,
@@ -22,7 +17,6 @@ const Chat = ({
   chatId,
 }) => {
   const [textValue, setText] = useState('te');
-  const barHeight = useBarHeight();
 
   useEffect(() => {
     loadMessages(chatId);
@@ -45,19 +39,14 @@ const Chat = ({
   const list = messages.ids[chatId] || [];
 
   return (
-    <SafeAreaView style={styles.safeAreaView}>
-      <KeyboardAvoidingView
-        keyboardVerticalOffset={barHeight}
-        style={styles.container}
-        behavior="padding">
-        <MessagesList list={list.slice().reverse()} />
-        <Input
-          value={textValue}
-          onChangeText={setText}
-          onSubmitEditing={handleSubmit}
-        />
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+    <SafeAreaWrapper>
+      <MessagesList list={list.slice().reverse()} />
+      <Input
+        value={textValue}
+        onChangeText={setText}
+        onSubmitEditing={handleSubmit}
+      />
+    </SafeAreaWrapper>
   );
 };
 
@@ -68,14 +57,3 @@ export default connect(mapStateToProps, {
   postMessages,
   loadChats,
 })(Chat);
-
-const styles = StyleSheet.create({
-  safeAreaView: {
-    flex: 1,
-  },
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-  },
-});

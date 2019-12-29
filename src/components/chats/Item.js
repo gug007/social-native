@@ -7,9 +7,6 @@ const Item = ({onPress, item}) => {
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={customStyles.container}>
-        {/*
-          <View style={customStyles.image}></View>
-        */}
         <View style={customStyles.chatItem}>
           <Text style={theme.body1}>{item.title}</Text>
           {Messages.length > 0 && (
