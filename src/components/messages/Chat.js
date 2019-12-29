@@ -11,23 +11,27 @@ import Input from './Input';
 import MessagesList from './MessagesList';
 import useBarHeight from '../../hooks/useBarHeight';
 import {loadMessages, postMessages} from '../../containers/messages/actions';
+import {loadChats} from '../../containers/chats/actions';
 
-const Chat = ({isLoading, messages, loadMessages, postMessages, chatId}) => {
+const Chat = ({
+  isLoading,
+  messages,
+  loadMessages,
+  postMessages,
+  loadChats,
+  chatId,
+}) => {
   const [textValue, setText] = useState('te');
   const barHeight = useBarHeight();
 
   useEffect(() => {
     loadMessages(chatId);
   }, []);
-  const handleSubmit = () => {
-    // TODO: use real data
-    postMessages({
-      id: `${new Date()}`,
-      user: {id: 1, firstName: 'Gurgen', lastName: 'Abagyan'},
-      message: textValue,
-      date: new Date(),
-    });
+
+  const handleSubmit = async () => {
     setText('');
+    await postMessages({body: textValue, chatId, userId: 1});
+    loadChats();
   };
 
   if (isLoading) {
@@ -57,7 +61,11 @@ const Chat = ({isLoading, messages, loadMessages, postMessages, chatId}) => {
 
 const mapStateToProps = state => ({messages: state.messages});
 
-export default connect(mapStateToProps, {loadMessages, postMessages})(Chat);
+export default connect(mapStateToProps, {
+  loadMessages,
+  postMessages,
+  loadChats,
+})(Chat);
 
 const styles = StyleSheet.create({
   safeAreaView: {

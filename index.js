@@ -5,8 +5,8 @@ import SignIn from './src/components/SignIn';
 import SignUp from './src/components/SignUp';
 import Chats from './src/components/chats/Chats';
 import Chat from './src/components/messages/Chat';
-import AddChatButton from './src/components/messages/AddChatButton';
-import AddChatModal from './src/components/messages/AddChatModal';
+import AddChatButton from './src/components/chats/AddChatButton';
+import AddChatModal from './src/components/chats/AddChatModal';
 import {
   INITIALIZING,
   SIGN_IN,
@@ -19,16 +19,28 @@ import {
 
 import {store} from './src/store';
 
-const registerComponentWithRedux = (param, Component) =>
-  Navigation.registerComponentWithRedux(param, Component, Provider, store);
-
-registerComponentWithRedux(INITIALIZING, () => Initializing);
-registerComponentWithRedux(SIGN_IN, () => SignIn);
-registerComponentWithRedux(SIGN_UP, () => SignUp);
-registerComponentWithRedux(MAIN, () => Chats);
-registerComponentWithRedux(CHAT, () => Chat);
-registerComponentWithRedux(ADD_CHAT_BUTTON, () => AddChatButton);
-registerComponentWithRedux(ADD_CHAT_MODAL, () => AddChatModal);
+Navigation.registerComponentWithRedux(
+  INITIALIZING,
+  () => Initializing,
+  Provider,
+  store,
+);
+Navigation.registerComponentWithRedux(SIGN_IN, () => SignIn, Provider, store);
+Navigation.registerComponentWithRedux(SIGN_UP, () => SignUp, Provider, store);
+Navigation.registerComponentWithRedux(MAIN, () => Chats, Provider, store);
+Navigation.registerComponentWithRedux(CHAT, () => Chat, Provider, store);
+Navigation.registerComponentWithRedux(
+  ADD_CHAT_BUTTON,
+  () => AddChatButton,
+  Provider,
+  store,
+);
+Navigation.registerComponentWithRedux(
+  ADD_CHAT_MODAL,
+  () => AddChatModal,
+  Provider,
+  store,
+);
 
 Navigation.events().registerAppLaunchedListener(() => {
   Navigation.setRoot({

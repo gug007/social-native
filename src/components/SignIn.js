@@ -11,10 +11,9 @@ const SignIn = () => {
   const handleSignIn = async ({username, password}) => {
     try {
       const user = await AsyncStorage.setItem(USER_TOKEN, username);
-      console.log('user successfully signed in!', user);
       goHome();
     } catch (err) {
-      console.log('error:', err);
+      // console.log('error:', err);
     }
   };
 

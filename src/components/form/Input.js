@@ -5,7 +5,6 @@ export const getError = (touched, errors, name) =>
   touched[name] && errors[name];
 
 const renderSelect = ({field, form, ...props}) => {
-  console.log(field, form, props);
   // TODO: display error
   const error = getError(form.touched, form.errors, field.name);
   return (

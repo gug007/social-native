@@ -2,23 +2,26 @@ import React from 'react';
 import {StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
 import theme from '../../styles';
 
-const Item = ({onPress, item}) => (
-  <TouchableWithoutFeedback onPress={onPress}>
-    <View style={customStyles.container}>
-      {/*
-        <View style={customStyles.image}></View>
-      */}
-      <View style={customStyles.chatItem}>
-        <Text style={theme.body1}>{item.title}</Text>
-        {item.Messages.length > 0 && (
-          <Text style={[theme.body1, theme.secondaryText]} numberOfLines={2}>
-            {item.Messages[0].body}
-          </Text>
-        )}
+const Item = ({onPress, item}) => {
+  const {Messages = []} = item;
+  return (
+    <TouchableWithoutFeedback onPress={onPress}>
+      <View style={customStyles.container}>
+        {/*
+          <View style={customStyles.image}></View>
+        */}
+        <View style={customStyles.chatItem}>
+          <Text style={theme.body1}>{item.title}</Text>
+          {Messages.length > 0 && (
+            <Text style={[theme.body1, theme.secondaryText]} numberOfLines={2}>
+              {Messages[0].body}
+            </Text>
+          )}
+        </View>
       </View>
-    </View>
-  </TouchableWithoutFeedback>
-);
+    </TouchableWithoutFeedback>
+  );
+};
 
 const customStyles = StyleSheet.create({
   container: {

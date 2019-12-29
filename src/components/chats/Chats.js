@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
-import {View, Button} from 'react-native';
+import {Button, SafeAreaView, ScrollView} from 'react-native';
 import AsyncStorage from '../../AsyncStorage';
 import {goToAuth, goToMessenger} from '../../navigation';
 import {ADD_CHAT_BUTTON} from '../../constants/navigation';
@@ -23,25 +23,26 @@ const Chats = ({componentId, chats, loadChats}) => {
 
   const handleLogout = async () => {
     try {
-      console.log(555, await AsyncStorage.getItem(USER_TOKEN));
       // await AsyncStorage.removeItem(USER_TOKEN);
       goToAuth();
     } catch (err) {
-      console.log('error signing out...: ', err);
+      // console.log('error signing out...: ', err);
     }
   };
 
   return (
-    <View>
-      {chats.list.map(item => (
-        <Item
-          key={item.id}
-          item={item}
-          onPress={() => goToMessenger(componentId, item.id)}
-        />
-      ))}
-      <Button onPress={handleLogout} title="Sign Out" />
-    </View>
+    <SafeAreaView>
+      <ScrollView>
+        {chats.list.map(item => (
+          <Item
+            key={item.id}
+            item={item}
+            onPress={() => goToMessenger(componentId, item.id)}
+          />
+        ))}
+        <Button onPress={handleLogout} title="Sign Out" />
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

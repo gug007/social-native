@@ -8,9 +8,9 @@ const SignUp = () => {
   const handleSignUp = async () => {
     try {
       // TODO: sign up logic
-      console.log('successfully signed up');
+      // console.log('successfully signed up');
     } catch (err) {
-      console.log('error', err);
+      // console.log('error', err);
     }
   };
 
