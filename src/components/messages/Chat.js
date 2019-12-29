@@ -42,13 +42,15 @@ const Chat = ({
     );
   }
 
+  const list = messages.ids[chatId] || [];
+
   return (
     <SafeAreaView style={styles.safeAreaView}>
       <KeyboardAvoidingView
         keyboardVerticalOffset={barHeight}
         style={styles.container}
         behavior="padding">
-        <MessagesList list={messages.list.slice().reverse()} />
+        <MessagesList list={list.slice().reverse()} />
         <Input
           value={textValue}
           onChangeText={setText}

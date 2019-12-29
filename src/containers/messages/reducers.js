@@ -4,11 +4,11 @@ import {
   MESSAGES_LOAD_FAILURE,
   MESSAGES_CREATE_REQUEST,
   MESSAGES_CREATE_SUCCESS,
-  MESSAGES_CREATE_FAILURE
+  MESSAGES_CREATE_FAILURE,
 } from './constants';
 
 export const initialState = {
-  list: [],
+  ids: {},
   fetch: 0,
   loading: false,
   saving: false,
@@ -21,7 +21,7 @@ export default (state = initialState, action) => {
     case MESSAGES_LOAD_SUCCESS:
       return {
         ...state,
-        list: action.payload,
+        ids: {[action.chatId]: action.payload},
         fetch: state.fetch + 1,
         loading: false,
       };
@@ -32,7 +32,13 @@ export default (state = initialState, action) => {
     case MESSAGES_CREATE_SUCCESS:
       return {
         ...state,
-        list: [...state.list, action.payload],
+        ids: {
+          ...state.ids,
+          [action.payload.chatId]: [
+            ...state.ids[action.payload.chatId],
+            action.payload,
+          ],
+        },
         fetch: state.fetch + 1,
         saving: false,
       };
