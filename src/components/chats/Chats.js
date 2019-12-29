@@ -2,9 +2,10 @@ import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {Button, SafeAreaView, ScrollView} from 'react-native';
 import {goToAuth, goToMessenger} from '../../navigation';
-import {ADD_CHAT_BUTTON} from '../../constants/navigation';
+import {ADD_CHAT_BUTTON, USER_TOKEN} from '../../constants/navigation';
 import {loadChats} from '../../containers/chats/actions';
 import Item from './Item';
+import AsyncStorage from '../../AsyncStorage';
 
 const Chats = ({componentId, chats, loadChats}) => {
   useEffect(() => {
@@ -12,12 +13,8 @@ const Chats = ({componentId, chats, loadChats}) => {
   }, []);
 
   const handleLogout = async () => {
-    try {
-      // await AsyncStorage.removeItem(USER_TOKEN);
-      goToAuth();
-    } catch (err) {
-      // console.log('error signing out...: ', err);
-    }
+    AsyncStorage.removeItem(USER_TOKEN);
+    goToAuth();
   };
 
   return (

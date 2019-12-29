@@ -1,20 +1,15 @@
 import React, {useEffect} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import AsyncStorage from '../AsyncStorage';
-import {goToAuth, goHome} from '../navigation';
-import {USER_TOKEN} from '../constants/navigation';
-import styles from '../styles';
+import {connect} from 'react-redux';
+import {View, Text} from 'react-native';
+ import {goToAuth} from '../navigation';
+ import styles from '../styles';
+import {loadUser} from '../containers/user/actions';
 
-const Initialising = () => {
+const Initialising = ({loadUser}) => {
   useEffect(() => {
     (async () => {
       try {
-        const user = await AsyncStorage.getItem(USER_TOKEN);
-        if (user) {
-          setTimeout(goHome, 1000);
-        } else {
-          setTimeout(goToAuth, 1000);
-        }
+        loadUser();
       } catch (err) {
         goToAuth();
       }
@@ -23,15 +18,9 @@ const Initialising = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={customStyles.welcome}>Loading..</Text>
+      <Text style={styles.h1}>Loading..</Text>
     </View>
   );
 };
 
-const customStyles = StyleSheet.create({
-  welcome: {
-    fontSize: 28,
-  },
-});
-
-export default Initialising;
+export default connect(null, {loadUser})(Initialising);

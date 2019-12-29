@@ -1,33 +1,29 @@
 import React from 'react';
-import {View, StyleSheet, TextInput, Button} from 'react-native';
+import {connect} from 'react-redux';
+import {View, Button} from 'react-native';
 import {Formik, Field} from 'formik';
-import AsyncStorage from '../AsyncStorage';
-import {goHome} from '../navigation';
 import {Input} from './form';
-import {USER_TOKEN} from '../constants/navigation';
 import styles from '../styles';
 import SafeAreaWrapper from '../components/common/SafeAreaWrapper';
+import {signIn} from '../containers/user/actions';
 
-const SignIn = () => {
-  const handleSignIn = async ({username, password}) => {
+const SignIn = ({signIn}) => {
+  const handleSignIn = async ({email, password}) => {
     try {
-      const user = await AsyncStorage.setItem(USER_TOKEN, username);
-      goHome();
+      signIn({email, password});
     } catch (err) {
       console.log('error:', err);
     }
   };
 
   return (
-    <Formik
-      initialValues={{username: '', password: ''}}
-      onSubmit={handleSignIn}>
+    <Formik initialValues={{email: '', password: ''}} onSubmit={handleSignIn}>
       {({handleChange, handleBlur, handleSubmit}) => (
         <SafeAreaWrapper>
           <View style={styles.container}>
             <Field
-              name="username"
-              placeholder="Username"
+              name="email"
+              placeholder="email"
               autoCorrect={false}
               component={Input}
             />
@@ -45,4 +41,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default connect(null, {signIn})(SignIn);
