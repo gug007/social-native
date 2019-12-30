@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import {View, ActivityIndicator} from 'react-native';
 import Input from './Input';
 import MessagesList from './MessagesList';
-import useBarHeight from '../../hooks/useBarHeight';
 import {loadMessages, postMessages} from '../../containers/messages/actions';
 import {loadChats} from '../../containers/chats/actions';
 import SafeAreaWrapper from '../common/SafeAreaWrapper';
@@ -14,17 +13,22 @@ const Chat = ({
   loadMessages,
   postMessages,
   loadChats,
-  chatId,
+  chat,
+  user,
 }) => {
   const [textValue, setText] = useState('te');
 
   useEffect(() => {
-    loadMessages(chatId);
+    loadMessages(chat.id);
   }, []);
 
   const handleSubmit = async () => {
     setText('');
-    await postMessages({body: textValue, chatId, userId: 1});
+    await postMessages({
+      body: textValue,
+      chatId: chat.id,
+      userId: user.data.id,
+    });
     loadChats();
   };
 
@@ -36,11 +40,11 @@ const Chat = ({
     );
   }
 
-  const list = messages.ids[chatId] || [];
+  const list = messages.ids[chat.id] || [];
 
   return (
     <SafeAreaWrapper>
-      <MessagesList list={list.slice().reverse()} />
+      <MessagesList user={user.data} list={list.slice().reverse()} />
       <Input
         value={textValue}
         onChangeText={setText}
@@ -50,7 +54,7 @@ const Chat = ({
   );
 };
 
-const mapStateToProps = state => ({messages: state.messages});
+const mapStateToProps = state => ({messages: state.messages, user: state.user});
 
 export default connect(mapStateToProps, {
   loadMessages,

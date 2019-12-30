@@ -24,7 +24,7 @@ const Chats = ({componentId, chats, loadChats}) => {
           <Item
             key={item.id}
             item={item}
-            onPress={() => goToMessenger(componentId, item.id)}
+            onPress={() => goToMessenger(componentId, item)}
           />
         ))}
         <Button onPress={handleLogout} title="Sign Out" />

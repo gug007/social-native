@@ -23,7 +23,8 @@ const SignIn = ({signIn}) => {
           <View style={styles.container}>
             <Field
               name="email"
-              placeholder="email"
+              keyboardType="email-address"
+              placeholder="Email"
               autoCorrect={false}
               component={Input}
             />

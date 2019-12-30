@@ -21,41 +21,39 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   body1: {
-    // fontWeight: font.weights.text,
     fontSize: 16,
-    // lineHeight: 1.6,
+    color: primaryText,
   },
   body2: {
-    // fontWeight: font.weights.text,
     fontSize: 15,
-    // lineHeight: 1.5,
+    color: primaryText,
   },
   h1: {
-    // fontWeight: font.weights.light,
     fontSize: 32,
-    letterSpacing: -0.8,
+    color: primaryText,
   },
   h2: {
-    // fontWeight: font.weights.text,
     fontSize: 22,
-    letterSpacing: -0.2,
+    color: primaryText,
   },
   h3: {
-    // fontWeight: font.weights.text,
     fontSize: 18,
     lineHeight: 24,
+    color: primaryText,
   },
   h4: {
-    // fontWeight: font.weights.semibold,
     fontSize: 12,
     letterSpacing: 0.8,
     textTransform: 'uppercase',
     color: primaryText,
   },
   caption: {
-    // fontWeight: font.weights.text,
     fontSize: 12,
-    lineHeight: 1,
+    color: primaryText,
+  },
+  tiny: {
+    fontSize: 10,
+    color: primaryText,
   },
   primaryText: {
     color: primaryText,

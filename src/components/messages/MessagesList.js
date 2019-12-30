@@ -1,28 +1,35 @@
 import React from 'react';
 import {StyleSheet, FlatList, View, Text} from 'react-native';
 import moment from 'moment';
+import theme from '../../styles';
 
-const MessagesList = ({list}) => (
+const MessagesList = ({list, user}) => (
   <FlatList
     style={styles.scrollView}
     data={list}
     keyExtractor={item => item.id.toString()}
-    renderItem={({item}) => (
-      <View
-        style={[
-          styles.container,
-          {
-            alignSelf: 'flex-start',
-          },
-        ]}>
-        <View style={styles.message}>
-          <Text>{item.body}</Text>
-          <Text style={styles.messageDate}>
-            {moment(item.createdAt).format('LT')}
-          </Text>
+    renderItem={({item}) => {
+      const containerStyles = [
+        styles.container,
+        {
+          alignSelf: item.userId === user.id ? 'flex-end' : 'flex-start',
+        },
+      ];
+      return (
+        <View style={containerStyles}>
+          <View style={styles.message}>
+            <View>
+              <Text style={theme.body1}>{item.body}</Text>
+            </View>
+            <View style={styles.date}>
+              <Text style={[theme.tiny, theme.secondaryText]}>
+                {moment(item.createdAt).format('LT')}
+              </Text>
+            </View>
+          </View>
         </View>
-      </View>
-    )}
+      );
+    }}
     inverted
   />
 );
@@ -43,13 +50,16 @@ const styles = StyleSheet.create({
     marginRight: 7,
   },
   message: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     maxWidth: '80%',
     padding: 7,
   },
-  messageDate: {
-    width: '100%',
-    color: '#999',
-    textAlign: 'right',
-    fontSize: 10,
+  date: {
+    paddingLeft: 7,
+    alignSelf: 'flex-end',
+    marginLeft: 'auto'
   },
 });
